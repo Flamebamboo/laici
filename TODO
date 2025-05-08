@@ -1,3 +1,8 @@
 
 Todo:
-  ☐ Make some API calls to pollination AI and get the image displayed
+  ✔ Make some API calls to pollination AI and get the image displayed 
+  ✔ Make home page styling with drop your photo component 
+  ✔ Styling the home component and add google fonts package @done(25-05-08 11:20)
+  ✔ Add gradient background with angular @10min @started(25-05-08 11:26) @done(25-05-08 11:55) @lasted(29m16s)
+  ✔ Add icon from ionicons @5min @started(25-05-08 11:55) @done(25-05-08 12:05) @lasted(10m3s)
+  ☐ Button component with linear graident 
