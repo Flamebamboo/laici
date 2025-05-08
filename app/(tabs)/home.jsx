@@ -1,6 +1,8 @@
+import { Image } from 'expo-image';
 import { LinearGradient } from 'expo-linear-gradient';
 import React from 'react';
 import { SafeAreaView, StyleSheet, Text, View, useWindowDimensions } from 'react-native';
+import Button from '../../components/Button';
 import UploadImage from '../../components/UploadImage';
 
 const Home = () => {
@@ -15,6 +17,7 @@ const Home = () => {
       />
       <View style={styles.mainWrapper}>
         <View style={styles.logoContainer}>
+          <Image style={styles.logoImg} source={require('../../assets/images/laicilogo.png')} contentFit="cover" />
           <Text style={styles.logo}>Laici AI</Text>
         </View>
         <Text style={[styles.title, { width: width * 0.8, fontSize: Math.min(width * 0.06, 32) }]}>
@@ -23,6 +26,8 @@ const Home = () => {
         {/* GlowCircle behind UploadImage */}
 
         <UploadImage />
+
+        <Button>Next</Button>
 
         <View style={styles.footerContainer}>
           <Text style={styles.footerText}>Powered by Laici AI</Text>
@@ -55,13 +60,19 @@ const styles = StyleSheet.create({
   },
   logoContainer: {
     alignSelf: 'flex-start',
-    marginHorizontal: 40,
+    display: 'flex',
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  logoImg: {
+    width: 64,
+    height: 64,
   },
   logo: {
     color: 'white',
     width: '100%',
     fontWeight: 'bold',
-    fontSize: 24,
+    fontSize: 22,
     fontFamily: 'Lato_400Regular',
   },
   title: {
