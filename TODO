@@ -8,3 +8,7 @@ Todo:
   ✔ Button component with linear gradient @done(25-05-08 18:22)
   ✔ Display images once uploaded @5min @started(25-05-08 20:27) @done(25-05-08 20:38) @lasted(11m30s)
   ✔ Add loading spinner while image is being processed using activity indicator @done(25-05-08 20:38)
+  ✔ Store the image in context using react context @done(25-05-08 21:35)
+  ✔ Start writing the API service to call pollination AI @done(25-05-09 23:07)
+  ✔ Create a sample quiz data to send to model with uploaded image @15mins @started(25-05-09 08:25) @done(25-05-09 08:45) @lasted(20m27s)
+  ☐ style preference quiz to send to model 

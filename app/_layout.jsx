@@ -1,5 +1,6 @@
 import { Lato_400Regular, Lato_700Bold, useFonts } from '@expo-google-fonts/lato';
 import { Stack } from 'expo-router';
+import { ImageProvider } from '../Context/ImageProvider';
 
 export default function RootLayout() {
   let [fontsLoaded] = useFonts({
@@ -12,8 +13,10 @@ export default function RootLayout() {
   }
 
   return (
-    <Stack screenOptions={{ headerShown: false }}>
-      <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-    </Stack>
+    <ImageProvider>
+      <Stack screenOptions={{ headerShown: false }}>
+        <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+      </Stack>
+    </ImageProvider>
   );
 }

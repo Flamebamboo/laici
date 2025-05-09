@@ -9,7 +9,7 @@ const convertToBase64 = async (uri) => {
       reader.readAsDataURL(blob);
     });
   } catch (error) {
-    console.error("Error converting image to base64:", error);
+    console.error('Error converting image to base64:', error);
     return null;
   }
 };
@@ -46,21 +46,41 @@ Comparison between convertToBase64 and fileToBase64:
 Both functions ultimately use FileReader.readAsDataURL() to create a base64 data URL.
 */
 
-export async function analyzeImage(uri, question = "What's in this image?") {
-  const url = "https://text.pollinations.ai/openai";
+const options = [
+  { id: 1, text: 'Pure white background' },
+  { id: 2, text: 'Colored background' },
+  { id: 3, text: 'Transparent (for layering)' },
+  { id: 4, text: 'Lifestyle/environmental setting' },
+  { id: 5, text: 'Textured or abstract' },
+];
+
+const quizData = {
+  question: 'What background style do you want for your product photos?',
+  options,
+  answer: options[2].text, //user selected option later
+};
+
+export async function analyzeImage(uri, setImage, question = 'Explain this image as a proffesional UX designer') {
+  const url = 'https://text.pollinations.ai/openai';
 
   try {
     const base64ImageDataUrl = await convertToBase64(uri);
 
     const payload = {
-      model: "openai", // Ensure vision support
+      model: 'openai',
       messages: [
         {
-          role: "user",
+          role: 'system',
+          content: `You are a professional visual designer and art director. 
+          You analyze images with a focus on composition, color palette, layout, typography, design trends, and emotional tone. 
+          Use precise, creative language and describe the image in detail, as if explaining to a client or design team.`,
+        },
+        {
+          role: 'user',
           content: [
-            { type: "text", text: question },
+            { type: 'text', text: 'Please analyze this image and describe it like a professional designer would.' },
             {
-              type: "image_url",
+              type: 'image_url',
               image_url: {
                 url: base64ImageDataUrl,
               },
@@ -68,11 +88,14 @@ export async function analyzeImage(uri, question = "What's in this image?") {
           ],
         },
       ],
+      temperature: 0.7, // Balanced creativity
+      max_tokens: 1200, // Allows for rich, detailed output
+      top_p: 1,
     };
 
     const response = await fetch(url, {
-      method: "POST", // a post request means we are sending data to the server
-      headers: { "Content-Type": "application/json" }, //headers are metadata about the request
+      method: 'POST', // a post request means we are sending data to the server
+      headers: { 'Content-Type': 'application/json' }, //headers are metadata about the request
       body: JSON.stringify(payload),
     });
 
@@ -83,10 +106,46 @@ export async function analyzeImage(uri, question = "What's in this image?") {
 
     const result = await response.json();
 
-    console.log("API RESPONSE:", JSON.stringify(result, null, 2));
+    console.log('API RESPONSE:', JSON.stringify(result, null, 2));
 
-    console.log("Vision Analysis:", result.choices[0].message.content);
+    TxtToImg(quizData, result.choices[0].message.content, setImage);
   } catch (error) {
-    console.error("Error analyzing image:", error);
+    console.error('Error analyzing image:', error);
   }
 }
+
+//the idea is to use mock data for now.
+
+export const TxtToImg = (data, reference, setImage) => {
+  async function fetchImage() {
+    const { answer } = data;
+    const prompt = `Create an image that uses these image details ${reference} and change the background to ${answer}`;
+
+    const queryParams = new URLSearchParams();
+    const encodedPrompt = encodeURIComponent(prompt);
+    const url = `https://image.pollinations.ai/prompt/${encodedPrompt}?${queryParams.toString()}`;
+
+    console.log('Fetching image from:', url);
+
+    try {
+      const response = await fetch(url);
+      if (!response.ok) {
+        const errorText = await response.text();
+        throw new Error(`HTTP error! status: ${response.status}, message: ${errorText}`);
+      }
+
+      const imageBlob = await response.blob(); //blob is a binary large object and is used to hold binary data
+
+      // Convert blob to base64
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setImage(reader.result); // Base64 string
+      };
+      reader.readAsDataURL(imageBlob);
+    } catch (error) {
+      console.error('Error fetching image:', error);
+    }
+  }
+
+  fetchImage();
+};

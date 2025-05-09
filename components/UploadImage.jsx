@@ -3,12 +3,14 @@ import { Image } from 'expo-image';
 import * as ImagePicker from 'expo-image-picker';
 import { useState } from 'react';
 import { ActivityIndicator, StyleSheet, Text, TouchableOpacity, useWindowDimensions, View } from 'react-native';
-import { analyzeImage } from '../utils/pollinationClient';
 import GlowCircle from './GlowComponent';
+
+import { useImage } from '../Context/ImageProvider';
+import { analyzeImage } from '../utils/pollinationClient';
 
 const UploadImage = () => {
   const { width, height } = useWindowDimensions();
-  const [image, setImage] = useState(null);
+  const { image, setImage } = useImage();
   const [loading, setLoading] = useState(false);
 
   const pickImage = async () => {
@@ -23,7 +25,7 @@ const UploadImage = () => {
     if (!result.canceled) {
       setLoading(true);
       setImage(result.assets[0].uri);
-      analyzeImage(result.assets[0].uri);
+      analyzeImage(result.assets[0].uri, setImage);
     }
   };
 

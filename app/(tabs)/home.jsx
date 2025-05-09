@@ -5,8 +5,15 @@ import { SafeAreaView, StyleSheet, Text, View, useWindowDimensions } from 'react
 import Button from '../../components/Button';
 import UploadImage from '../../components/UploadImage';
 
+import { TxtToImg } from '../../utils/pollinationClient';
+
 const Home = () => {
   const { width, height } = useWindowDimensions();
+
+  const handleGenerateImage = async () => {
+    const image = TxtToImg();
+  };
+
   return (
     <SafeAreaView style={styles.container}>
       <LinearGradient
