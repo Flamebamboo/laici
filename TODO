@@ -11,4 +11,9 @@ Todo:
   ✔ Store the image in context using react context @done(25-05-08 21:35)
   ✔ Start writing the API service to call pollination AI @done(25-05-09 23:07)
   ✔ Create a sample quiz data to send to model with uploaded image @15mins @started(25-05-09 08:25) @done(25-05-09 08:45) @lasted(20m27s)
-  ☐ style preference quiz to send to model 
+  ✔ Work on the survey component and create a questions data structure @done(25-05-11 15:07)
+  ☐ Extract product details with pollination AI vison analysis input
+  ☐ Preprocess the uploaded image to go through background removal
+  ☐ Use openAI image gen 1 model to generate images with the quiz data, we can use vision analysis logic from pollination AI for reference image in the future
+  
+  

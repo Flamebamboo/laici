@@ -1,9 +1,8 @@
 import { LinearGradient } from 'expo-linear-gradient';
-import React from 'react';
 import { StyleSheet, Text } from 'react-native';
 import PressableScale from './PressableScale';
 
-const Button = ({ children, onPress }) => {
+const NextButton = ({ children, onPress }) => {
   return (
     <PressableScale onPress={onPress} s>
       <LinearGradient
@@ -33,4 +32,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Button;
+export default NextButton;

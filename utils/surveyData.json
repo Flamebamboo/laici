@@ -1,0 +1,52 @@
+[
+  {
+    "id": "background",
+    "question": "What background style do you want for your product photos?",
+    "options": [
+      { "id": 1, "text": "Pure white background" },
+      { "id": 2, "text": "Colored background" },
+      { "id": 3, "text": "Lifestyle/environmental setting" },
+      { "id": 4, "text": "Textured or abstract" }
+    ]
+  },
+  {
+    "id": "audience",
+    "question": "Who is your target audience?",
+    "options": [
+      { "id": 1, "text": "Young adults (18-25)" },
+      { "id": 2, "text": "Adults (26-35)" },
+      { "id": 3, "text": "Middle-aged (36-50)" },
+      { "id": 4, "text": "Seniors (51+)" }
+    ]
+  },
+  {
+    "id": "tone",
+    "question": "What tone do you want your product photos to convey?",
+    "options": [
+      { "id": 1, "text": "Professional and clean" },
+      { "id": 2, "text": "Fun and playful" },
+      { "id": 3, "text": "Bold and dramatic" },
+      { "id": 4, "text": "Soft and inviting" }
+    ]
+  },
+  {
+    "id": "lighting",
+    "question": "What type of lighting do you prefer for your product photos?",
+    "options": [
+      { "id": 1, "text": "Bright and even lighting" },
+      { "id": 2, "text": "Soft and diffused lighting" },
+      { "id": 3, "text": "Moody and dramatic lighting" },
+      { "id": 4, "text": "Natural outdoor lighting" }
+    ]
+  },
+  {
+    "id": "format",
+    "question": "What format do you need for your product photos?",
+    "options": [
+      { "id": 1, "text": "Square (1:1)" },
+      { "id": 2, "text": "Portrait (4:5)" },
+      { "id": 3, "text": "Landscape (16:9)" },
+      { "id": 4, "text": "Custom dimensions" }
+    ]
+  }
+]

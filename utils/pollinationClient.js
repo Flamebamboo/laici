@@ -46,21 +46,26 @@ Comparison between convertToBase64 and fileToBase64:
 Both functions ultimately use FileReader.readAsDataURL() to create a base64 data URL.
 */
 
-const options = [
-  { id: 1, text: 'Pure white background' },
-  { id: 2, text: 'Colored background' },
-  { id: 3, text: 'Transparent (for layering)' },
-  { id: 4, text: 'Lifestyle/environmental setting' },
-  { id: 5, text: 'Textured or abstract' },
-];
+// const options = [
+//   { id: 1, text: 'Pure white background' },
+//   { id: 2, text: 'Colored background' },
+//   { id: 3, text: 'Transparent (for layering)' },
+//   { id: 4, text: 'Lifestyle/environmental setting' },
+//   { id: 5, text: 'Textured or abstract' },
+// ];
 
-const quizData = {
-  question: 'What background style do you want for your product photos?',
-  options,
-  answer: options[2].text, //user selected option later
-};
+// const quizData = {
+//   question: 'What background style do you want for your product photos?',
+//   options,
+//   answer: options[2].text, //user selected option later
+// };
 
-export async function analyzeImage(uri, setImage, question = 'Explain this image as a proffesional UX designer') {
+export async function analyzeImage(
+  uri,
+  setImage,
+  answers,
+  question = 'Explain this image as a professional UX designer'
+) {
   const url = 'https://text.pollinations.ai/openai';
 
   try {
@@ -94,8 +99,8 @@ export async function analyzeImage(uri, setImage, question = 'Explain this image
     };
 
     const response = await fetch(url, {
-      method: 'POST', // a post request means we are sending data to the server
-      headers: { 'Content-Type': 'application/json' }, //headers are metadata about the request
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(payload),
     });
 
@@ -108,18 +113,21 @@ export async function analyzeImage(uri, setImage, question = 'Explain this image
 
     console.log('API RESPONSE:', JSON.stringify(result, null, 2));
 
-    TxtToImg(quizData, result.choices[0].message.content, setImage);
+    TxtToImg(result.choices[0].message.content, setImage, answers);
   } catch (error) {
     console.error('Error analyzing image:', error);
   }
 }
 
-//the idea is to use mock data for now.
-
-export const TxtToImg = (data, reference, setImage) => {
+export const TxtToImg = (reference, setImage, answers) => {
   async function fetchImage() {
-    const { answer } = data;
-    const prompt = `Create an image that uses these image details ${reference} and change the background to ${answer}`;
+    // Extract details from the reference text
+
+    const prompt = `Create a professional image for a ${reference}.With these details. Background: ${
+      answers.background || 'natural'
+    }. Target audience: ${answers.audience || 'general'}. Tone: ${answers.tone || 'professional'}. 
+    Lighting: ${answers.lighting || 'standard'}. 
+    Format: ${answers.format || 'standard'}.`;
 
     const queryParams = new URLSearchParams();
     const encodedPrompt = encodeURIComponent(prompt);
@@ -134,7 +142,7 @@ export const TxtToImg = (data, reference, setImage) => {
         throw new Error(`HTTP error! status: ${response.status}, message: ${errorText}`);
       }
 
-      const imageBlob = await response.blob(); //blob is a binary large object and is used to hold binary data
+      const imageBlob = await response.blob();
 
       // Convert blob to base64
       const reader = new FileReader();

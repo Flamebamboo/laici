@@ -6,9 +6,8 @@ import { ActivityIndicator, StyleSheet, Text, TouchableOpacity, useWindowDimensi
 import GlowCircle from './GlowComponent';
 
 import { useImage } from '../Context/ImageProvider';
-import { analyzeImage } from '../utils/pollinationClient';
 
-const UploadImage = () => {
+const UploadImage = ({ setHeadline }) => {
   const { width, height } = useWindowDimensions();
   const { image, setImage } = useImage();
   const [loading, setLoading] = useState(false);
@@ -25,12 +24,13 @@ const UploadImage = () => {
     if (!result.canceled) {
       setLoading(true);
       setImage(result.assets[0].uri);
-      analyzeImage(result.assets[0].uri, setImage);
+      setHeadline && setHeadline('Photo uploaded! Ready for the next step?');
     }
   };
 
   const removeImage = () => {
     setImage(null);
+    setHeadline && setHeadline('Turn Phone Photos Into Professional Product Listing');
   };
 
   return (
