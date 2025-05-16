@@ -3,7 +3,6 @@ import { Image } from 'expo-image';
 import * as ImagePicker from 'expo-image-picker';
 import { useState } from 'react';
 import { ActivityIndicator, StyleSheet, Text, TouchableOpacity, useWindowDimensions, View } from 'react-native';
-import GlowCircle from './GlowComponent';
 
 import { useImage } from '../Context/ImageProvider';
 
@@ -39,7 +38,6 @@ const UploadImage = ({ setHeadline }) => {
       onPress={!image ? pickImage : undefined}
       activeOpacity={image ? 1 : 0.7}
     >
-      <GlowCircle color="#3693FF" size={300} blur={140} />
       {!image ? (
         <>
           <View

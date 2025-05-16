@@ -3,7 +3,6 @@ import { useEffect } from 'react';
 import { Text, TouchableOpacity, View, useWindowDimensions } from 'react-native';
 import Animated, { FadeIn, SlideInRight, SlideOutLeft } from 'react-native-reanimated';
 import surveyQuestions from '../utils/surveyData.json';
-import GlowCircle from './GlowComponent';
 
 const Survey = ({ setHeadline, current, answers, onSelect, onBack, onNext }) => {
   const { width, height } = useWindowDimensions();
@@ -39,9 +38,6 @@ const Survey = ({ setHeadline, current, answers, onSelect, onBack, onNext }) => 
 
   return (
     <View style={[styles.container, { width: width, maxHeight: 450, maxWidth: 700 }]}>
-      <GlowCircle color="#3693FF" size={300} blur={180} />
-      {/* Header with back button */}
-
       {/* Progress bar */}
       <View style={styles.progressBarContainer}>
         <Animated.View style={[styles.progressBar, { width: `${progress}%` }]} entering={FadeIn.duration(300)} />

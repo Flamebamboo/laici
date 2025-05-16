@@ -7,6 +7,7 @@ import UploadImage from '../../components/UploadImage';
 import surveyQuestions from '../../utils/surveyData.json';
 
 import { useImage } from '../../Context/ImageProvider';
+import GlowCircle from '../../components/GlowComponent';
 import NextButton from '../../components/NextButton';
 import { analyzeImage } from '../../utils/pollinationClient';
 
@@ -87,6 +88,8 @@ const Home = () => {
         end={{ x: 1, y: 1 }}
         style={[styles.background, { height: height }]}
       />
+      <GlowCircle />
+
       <View style={styles.mainWrapper}>
         <View style={styles.logoContainer}>
           <Image style={styles.logoImg} source={require('../../assets/images/laicilogo.png')} contentFit="cover" />
