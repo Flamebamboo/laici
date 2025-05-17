@@ -80,6 +80,14 @@ const Home = () => {
     }
   };
 
+  // disable Next if no image on step 1, or no answer on current survey step
+  const isNextDisabled =
+    step === 1
+      ? !image
+      : surveyIndex < surveyQuestions.length
+      ? !surveyAnswers[surveyQuestions[surveyIndex].id]
+      : false;
+
   return (
     <SafeAreaView style={styles.container}>
       <LinearGradient
@@ -139,7 +147,9 @@ const Home = () => {
           />
         )}
 
-        <NextButton onPress={handleNext}>Next</NextButton>
+        <NextButton onPress={handleNext} disabled={isNextDisabled}>
+          Next
+        </NextButton>
 
         <View style={styles.footerContainer}>
           <Text style={styles.footerText}>Powered by Laici AI</Text>

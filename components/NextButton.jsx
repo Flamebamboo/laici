@@ -1,19 +1,22 @@
 import { LinearGradient } from 'expo-linear-gradient';
-import { StyleSheet, Text } from 'react-native';
-import PressableScale from './PressableScale';
+import { StyleSheet, Text, TouchableOpacity } from 'react-native';
 
-const NextButton = ({ children, onPress }) => {
+const NextButton = ({ children, onPress, disabled }) => {
   return (
-    <PressableScale onPress={onPress} s>
-      <LinearGradient
-        colors={['#4F5BDC', '#8C08C2']}
-        style={styles.gradient}
-        start={{ x: 0, y: 0 }}
-        end={{ x: 1, y: 0 }}
-      >
-        <Text style={styles.text}>{children}</Text>
-      </LinearGradient>
-    </PressableScale>
+    <TouchableOpacity disabled={disabled} onPress={onPress}>
+      {disabled ? (
+        <Text style={[styles.gradient, { backgroundColor: 'grey', opacity: 0.5 }, styles.text]}>{children}</Text>
+      ) : (
+        <LinearGradient
+          colors={['#4F5BDC', '#8C08C2']}
+          style={styles.gradient}
+          start={{ x: 0, y: 0 }}
+          end={{ x: 1, y: 0 }}
+        >
+          <Text style={styles.text}>{children}</Text>
+        </LinearGradient>
+      )}
+    </TouchableOpacity>
   );
 };
 

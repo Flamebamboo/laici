@@ -12,10 +12,30 @@ Todo:
   ✔ Start writing the API service to call pollination AI @done(25-05-09 23:07)
   ✔ Create a sample quiz data to send to model with uploaded image @15mins @started(25-05-09 08:25) @done(25-05-09 08:45) @lasted(20m27s)
   ✔ Work on the survey component and create a questions data structure @done(25-05-11 15:07)
-  ☐ Extract product details with pollination AI vison analysis input
+  ✔ Error prevention: disable button if no image is uploaded/question selected @10mins @started(25-05-16 21:06) @done(25-05-16 21:16) @lasted(10m47s)
+  ☐ User control and freedom: Allow user to go back and change their answers or re-upload an image 
+  ☐ Extract product details with pollination AI vison analysis inputs
   ☐ Preprocess the uploaded image to go through background removal
   ☐ Use openAI image gen 1 model to generate images with the quiz data, we can use vision analysis logic from pollination AI for reference image in the future
+  ☐ And many more... 
+  
   
 
 
-  
+  Hours Log This Month 20hours: 
+    17th May 2025 10:12PM current time. 80 Hours left to complete 100 hours total
+    80 hours ÷ 14 days = ~5 hours and 45 minutes per day
+    ☐ 18th Sunday @6hours
+    ☐ 19th Monday @6hours
+    ☐ 20th Tuesday @6hours
+    ☐ 21st Wednesday @6hours
+    ☐ 22nd Thursday @6hours
+    ☐ 23rd Friday @6hours
+    ☐ 24th Saturday @6hours
+    ☐ 25th Sunday @6hours
+    ☐ 26th Monday @6hours
+    ☐ 27th Tuesday @6hours
+    ☐ 28th Wednesday @6hours
+    ☐ 29th Thursday @6hours
+    ☐ 30th Friday @6hours
+    ☐ 31st Saturday @6hours
