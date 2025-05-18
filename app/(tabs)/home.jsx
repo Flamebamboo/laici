@@ -13,6 +13,8 @@ import ImageModal from '../../components/ImageModal';
 import NextButton from '../../components/NextButton';
 import { analyzeImage } from '../../utils/pollinationClient';
 
+import { downloadImage } from '../../components/downloadImage';
+
 const Home = () => {
   const { width, height } = useWindowDimensions();
   const [step, setStep] = useState(1);
@@ -150,7 +152,7 @@ const Home = () => {
                 <Text style={styles.restartButtonText}>Create another</Text>
               </TouchableOpacity>
 
-              <TouchableOpacity onPress={console.log('upload the resulted image')} style={styles.downloadButton}>
+              <TouchableOpacity onPress={downloadImage(image)} style={styles.downloadButton}>
                 <Feather name="download" size={18} color="#fff" style={styles.buttonIcon} />
                 <Text style={styles.downloadButtonText}>Save image</Text>
               </TouchableOpacity>

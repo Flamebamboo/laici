@@ -4,12 +4,8 @@ import { Text, TouchableOpacity, View, useWindowDimensions } from 'react-native'
 import Animated, { FadeIn, SlideInRight, SlideOutLeft } from 'react-native-reanimated';
 import surveyQuestions from '../utils/surveyData.json';
 
-const Survey = ({ setHeadline, current, answers, onSelect }) => {
+const Survey = ({ setHeadline, current, answers, onSelect, onNext }) => {
   const { width, height } = useWindowDimensions();
-
-  useEffect(() => {
-    setHeadline && setHeadline('Answer a few questions to customize your product photo');
-  }, [setHeadline]);
 
   //surveyQuestions is an array of questions, we're accesing the question using the current index
   const currentQuestion = surveyQuestions[current];
@@ -35,6 +31,27 @@ const Survey = ({ setHeadline, current, answers, onSelect }) => {
     //   onNext();
     // }
   };
+
+  useEffect(() => {
+    setHeadline && setHeadline('Answer a few questions to customize your product photo');
+
+    const handleKeyDown = (event) => {
+      if (event.key >= '1' && event.key <= '4') {
+        const index = parseInt(event.key) - 1;
+        const options = currentQuestion?.options || [];
+
+        if (options[index]) {
+          handleOptionSelect(options[index].id);
+        }
+      }
+    };
+
+    window.addEventListener('keydown', handleKeyDown);
+
+    return () => {
+      window.removeEventListener('keydown', handleKeyDown);
+    };
+  }, [setHeadline, current, selectedOption, onNext]);
 
   return (
     <View style={[styles.container, { width: width, maxHeight: 450, maxWidth: 700 }]}>
