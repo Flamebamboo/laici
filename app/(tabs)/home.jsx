@@ -6,8 +6,10 @@ import Survey from '../../components/Survey';
 import UploadImage from '../../components/UploadImage';
 import surveyQuestions from '../../utils/surveyData.json';
 
+import { Feather } from '@expo/vector-icons';
 import { useImage } from '../../Context/ImageProvider';
 import GlowCircle from '../../components/GlowComponent';
+import ImageModal from '../../components/ImageModal';
 import NextButton from '../../components/NextButton';
 import { analyzeImage } from '../../utils/pollinationClient';
 
@@ -20,6 +22,7 @@ const Home = () => {
   const [surveyAnswers, setSurveyAnswers] = useState({});
 
   const [isGenerating, setIsGenerating] = useState(false);
+  const [modalVisible, setModalVisible] = useState(false);
 
   const handleSurveySelect = (optionId) => {
     setSurveyAnswers({ ...surveyAnswers, [surveyQuestions[surveyIndex].id]: optionId });
@@ -43,6 +46,7 @@ const Home = () => {
   const handleGenerate = async () => {
     try {
       setIsGenerating(true);
+      setHeadline('Your Professional Product Image');
       // Map through surveyQuestions and extract the answers
       const answers = surveyQuestions.map((question) => {
         const selectedOptionId = surveyAnswers[question.id];
@@ -99,42 +103,58 @@ const Home = () => {
       <GlowCircle />
 
       <View style={styles.mainWrapper}>
-        <View style={styles.logoContainer}>
-          <Image style={styles.logoImg} source={require('../../assets/images/laicilogo.png')} contentFit="cover" />
-          <Text style={styles.logo}>Laici AI</Text>
+        <View style={styles.headerContainer}>
+          <View style={styles.logoContainer}>
+            <Image style={styles.logoImg} source={require('../../assets/images/laicilogo.png')} contentFit="cover" />
+            <Text style={styles.logo}>Laici AI</Text>
+          </View>
+
+          {step > 1 && (
+            <TouchableOpacity
+              onPress={step === 2 && surveyIndex === 0 ? () => setStep(1) : handleSurveyBack}
+              style={styles.backButton}
+              activeOpacity={0.7}
+            >
+              <Feather name="chevron-left" size={24} color="#3693FF" />
+            </TouchableOpacity>
+          )}
         </View>
-        <View
-          style={{
-            width: '100%',
-            display: 'flex',
-            flexDirection: 'row',
-            alignItems: 'center',
-            justifyContent: 'center',
-          }}
-        >
+
+        <View style={styles.titleContainer}>
           <Text style={[styles.title, { width: width * 0.8, fontSize: Math.min(width * 0.06, 32) }]}>{headline}</Text>
         </View>
 
-        {/* GlowCircle behind UploadImage */}
-
+        {/* Content section */}
         {step === 1 ? (
           <UploadImage setHeadline={setHeadline} />
         ) : image && surveyIndex >= surveyQuestions.length ? (
-          // Show the final image if we've completed all survey questions
-          <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-            <Text style={styles.generatingText}>Your professional product image:</Text>
-            <View style={styles.imageContainer}>
+          <View style={styles.resultContainer}>
+            <TouchableOpacity style={styles.imageContainer} activeOpacity={0.9} onPress={() => setModalVisible(true)}>
               <Image source={{ uri: image }} style={styles.image} contentFit="cover" />
-            </View>
-            <TouchableOpacity
-              style={styles.restartButton}
-              onPress={() => {
-                setSurveyIndex(0);
-                setSurveyAnswers({});
-              }}
-            >
-              <Text style={styles.restartButtonText}>Create another image</Text>
+              <View style={styles.expandIcon}>
+                <Feather name="maximize-2" size={20} color="#fff" />
+              </View>
             </TouchableOpacity>
+
+            <View style={styles.actionRow}>
+              <TouchableOpacity
+                style={styles.restartButton}
+                onPress={() => {
+                  setSurveyIndex(0);
+                  setStep(1);
+                  setSurveyAnswers({});
+                  setHeadline('Turn Phone Photos Into Professional Product Listing');
+                }}
+              >
+                <Feather name="refresh-cw" size={18} color="#3693FF" style={styles.buttonIcon} />
+                <Text style={styles.restartButtonText}>Create another</Text>
+              </TouchableOpacity>
+
+              <TouchableOpacity onPress={console.log('upload the resulted image')} style={styles.downloadButton}>
+                <Feather name="download" size={18} color="#fff" style={styles.buttonIcon} />
+                <Text style={styles.downloadButtonText}>Save image</Text>
+              </TouchableOpacity>
+            </View>
           </View>
         ) : (
           <Survey
@@ -142,8 +162,6 @@ const Home = () => {
             current={surveyIndex}
             answers={surveyAnswers}
             onSelect={handleSurveySelect}
-            onNext={handleNext}
-            onBack={handleSurveyBack}
           />
         )}
 
@@ -154,6 +172,9 @@ const Home = () => {
         <View style={styles.footerContainer}>
           <Text style={styles.footerText}>Powered by Laici AI</Text>
         </View>
+
+        {/* Image Modal */}
+        <ImageModal visible={modalVisible} image={image} onClose={() => setModalVisible(false)} />
       </View>
     </SafeAreaView>
   );
@@ -180,11 +201,24 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center',
   },
+  headerContainer: {
+    width: '100%',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginBottom: 10,
+  },
   logoContainer: {
-    alignSelf: 'flex-start',
-    display: 'flex',
     flexDirection: 'row',
     alignItems: 'center',
+    flex: 1,
+  },
+  titleContainer: {
+    width: '100%',
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginBottom: 20,
   },
   logoImg: {
     width: 64,
@@ -214,6 +248,12 @@ const styles = StyleSheet.create({
     fontSize: 14,
     fontFamily: 'Lato_400Regular',
   },
+  resultContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    width: '100%',
+  },
   imageContainer: {
     width: 320,
     height: 320,
@@ -226,11 +266,20 @@ const styles = StyleSheet.create({
     backgroundColor: 'rgba(54, 147, 255, 0.1)',
     padding: 10,
     marginTop: 20,
+    position: 'relative',
   },
   image: {
     width: '100%',
     height: '100%',
     borderRadius: 15,
+  },
+  expandIcon: {
+    position: 'absolute',
+    bottom: 20,
+    right: 20,
+    backgroundColor: 'rgba(0,0,0,0.5)',
+    borderRadius: 20,
+    padding: 8,
   },
   generatingText: {
     color: 'white',
@@ -239,19 +288,54 @@ const styles = StyleSheet.create({
     fontFamily: 'Lato_400Regular',
     marginBottom: 10,
   },
+  actionRow: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    marginTop: 25,
+    width: '100%',
+  },
   restartButton: {
-    marginTop: 20,
     paddingHorizontal: 20,
     paddingVertical: 12,
     backgroundColor: 'rgba(54, 147, 255, 0.2)',
     borderRadius: 8,
     borderWidth: 1,
     borderColor: '#3693FF',
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginHorizontal: 6,
+  },
+  downloadButton: {
+    paddingHorizontal: 20,
+    paddingVertical: 12,
+    backgroundColor: '#3693FF',
+    borderRadius: 8,
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginHorizontal: 6,
+  },
+  buttonIcon: {
+    marginRight: 8,
   },
   restartButtonText: {
     color: '#FFFFFF',
     fontSize: 16,
     fontFamily: 'Lato_400Regular',
+  },
+  downloadButtonText: {
+    color: '#FFFFFF',
+    fontSize: 16,
+    fontFamily: 'Lato_400Regular',
+    fontWeight: 'bold',
+  },
+
+  backButton: {
+    padding: 10,
+    borderRadius: 20,
+    backgroundColor: 'rgba(54, 147, 255, 0.15)',
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginLeft: 10,
   },
 });
 

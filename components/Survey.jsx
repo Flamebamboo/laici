@@ -4,7 +4,7 @@ import { Text, TouchableOpacity, View, useWindowDimensions } from 'react-native'
 import Animated, { FadeIn, SlideInRight, SlideOutLeft } from 'react-native-reanimated';
 import surveyQuestions from '../utils/surveyData.json';
 
-const Survey = ({ setHeadline, current, answers, onSelect, onBack, onNext }) => {
+const Survey = ({ setHeadline, current, answers, onSelect }) => {
   const { width, height } = useWindowDimensions();
 
   useEffect(() => {
@@ -38,16 +38,16 @@ const Survey = ({ setHeadline, current, answers, onSelect, onBack, onNext }) => 
 
   return (
     <View style={[styles.container, { width: width, maxHeight: 450, maxWidth: 700 }]}>
-      {/* Progress bar */}
-      <View style={styles.progressBarContainer}>
-        <Animated.View style={[styles.progressBar, { width: `${progress}%` }]} entering={FadeIn.duration(300)} />
+      {/* Progress indicator section */}
+      <View style={styles.progressSection}>
+        <Text style={styles.progressText}>{`Question ${current + 1} of ${surveyQuestions.length}`}</Text>
+        <View style={styles.progressBarContainer}>
+          <Animated.View style={[styles.progressBar, { width: `${progress}%` }]} entering={FadeIn.duration(300)} />
+        </View>
       </View>
-      <View style={styles.headerRow}>
-        {current > 0 && (
-          <TouchableOpacity onPress={onBack} style={styles.backButton} activeOpacity={0.7}>
-            <Feather name="chevron-left" size={24} color="#3693FF" />
-          </TouchableOpacity>
-        )}
+
+      {/* Question section */}
+      <View style={styles.questionSection}>
         <Animated.Text
           style={styles.questionText}
           entering={SlideInRight.duration(300)}
@@ -57,16 +57,16 @@ const Survey = ({ setHeadline, current, answers, onSelect, onBack, onNext }) => 
         </Animated.Text>
       </View>
 
-      {/* Options */}
-      <Animated.View style={{ width: '100%', alignItems: 'center' }} entering={FadeIn.duration(400).delay(150)}>
+      {/* Options section */}
+      <Animated.View style={styles.optionsContainer} entering={FadeIn.duration(400).delay(150)}>
         {currentQuestion.options.map((option) => (
-          <Animated.View key={option.id} entering={FadeIn.duration(400).delay(200 + option.id * 50)}>
+          <Animated.View
+            key={option.id}
+            style={styles.optionWrapper}
+            entering={FadeIn.duration(400).delay(200 + option.id * 50)}
+          >
             <TouchableOpacity
-              style={[
-                styles.questionContainer,
-                { width: width * 0.7, height: height * 0.06 },
-                selectedOption === option.id && styles.selectedOption,
-              ]}
+              style={[styles.questionContainer, selectedOption === option.id && styles.selectedOption]}
               onPress={() => handleOptionSelect(option.id)}
               activeOpacity={0.8}
             >
@@ -91,17 +91,28 @@ export default Survey;
 const styles = {
   container: {
     flex: 1,
-    justifyContent: 'center',
+    justifyContent: 'space-between',
     alignItems: 'center',
-    paddingBottom: 50,
+    paddingTop: 10,
+    paddingBottom: 40,
+  },
+  progressSection: {
+    width: '85%',
+    marginBottom: 15,
+  },
+  progressText: {
+    color: '#fff',
+    fontSize: 14,
+    marginBottom: 8,
+    textAlign: 'right',
+    fontFamily: 'Lato_400Regular',
+    opacity: 0.8,
   },
   progressBarContainer: {
-    width: '85%',
+    width: '100%',
     height: 6,
     backgroundColor: 'rgba(255,255,255,0.15)',
     borderRadius: 3,
-    marginTop: 10,
-    marginBottom: 20,
     overflow: 'hidden',
   },
   progressBar: {
@@ -109,35 +120,31 @@ const styles = {
     backgroundColor: '#3693FF',
     borderRadius: 3,
   },
-  headerRow: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    marginBottom: 24,
-
+  questionSection: {
     width: '85%',
-    alignSelf: 'center',
-  },
-  backButton: {
-    padding: 8,
-    marginRight: 12,
-    borderRadius: 20,
-    backgroundColor: 'rgba(54, 147, 255, 0.15)',
-    justifyContent: 'center',
-    alignItems: 'center',
+    marginBottom: 20,
   },
   questionText: {
     color: '#fff',
-    fontSize: 18,
+    fontSize: 20,
     fontWeight: 'bold',
-    flex: 1,
     textAlign: 'left',
     fontFamily: 'Lato_400Regular',
-    lineHeight: 24,
+    lineHeight: 26,
+  },
+  optionsContainer: {
+    width: '100%',
+    alignItems: 'center',
+    justifyContent: 'center',
+    flex: 1,
+  },
+  optionWrapper: {
+    width: '85%',
+    marginVertical: 6,
   },
   questionContainer: {
-    padding: 20,
-    marginHorizontal: 10,
-    marginVertical: 11,
+    padding: 16,
+    width: '100%',
     borderColor: '#fff',
     backgroundColor: 'rgba(255,255,255,0.05)',
     borderWidth: 2,
