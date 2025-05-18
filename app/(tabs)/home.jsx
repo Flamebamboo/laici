@@ -152,7 +152,7 @@ const Home = () => {
                 <Text style={styles.restartButtonText}>Create another</Text>
               </TouchableOpacity>
 
-              <TouchableOpacity onPress={downloadImage(image)} style={styles.downloadButton}>
+              <TouchableOpacity onPress={() => downloadImage(image)} style={styles.downloadButton}>
                 <Feather name="download" size={18} color="#fff" style={styles.buttonIcon} />
                 <Text style={styles.downloadButtonText}>Save image</Text>
               </TouchableOpacity>

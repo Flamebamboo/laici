@@ -16,7 +16,7 @@ Todo:
   ✔ User control and freedom: Allow user to go back and change their answers or re-upload an image @done(25-05-18 10:56)
   ✔ Update the UI to make it more user friendly and visually appealing (global back button positioning, progress bar look abit off ) @done(25-05-18 11:08)
   ✔ Improve image results display with better styling, add a modal to show the image in full screen @done(25-05-18 12:03)
-  ☐ Create download image function
+  ✔ Create download image function @critical @1h @started(25-05-18 15:29) @done(25-05-18 18:46) @lasted(3h17m41s) breaks in between
   ✔ hotkeys for selecting questions using numbered keys 1-4 and enter to submit answer @done(25-05-18 14:38)
   ☐ Extract product details with pollination AI vison analysis inputs
   ☐ Preprocess the uploaded image to go through background removal
@@ -29,7 +29,7 @@ Todo:
   Hours Log This Month 20hours: 
     17th May 2025 10:12PM current time. 80 Hours left to complete 100 hours total
     80 hours ÷ 14 days = ~5 hours and 45 minutes per day
-    ☐ 18th Sunday @6hours (10:30 - 12:30  ✔) (2:30 - 4:30 ☐) (9:00 - 11:00 ☐) 
+    ☐ 18th Sunday @6hours (10:30 - 12:30  ✔) (2:30 - 4:30 ✔) (9:00 - 11:00 ☐) 
     ☐ 19th Monday @6hours
     ☐ 20th Tuesday @6hours
     ☐ 21st Wednesday @6hours
