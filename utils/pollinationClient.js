@@ -60,15 +60,11 @@ Both functions ultimately use FileReader.readAsDataURL() to create a base64 data
 //   answer: options[2].text, //user selected option later
 // };
 
-export async function analyzeImage(
-  uri,
-  setImage,
-  answers,
-  question = 'Explain this image as a professional UX designer'
-) {
+export async function analyzeImage(uri, setImage, answers) {
   const url = 'https://text.pollinations.ai/openai';
 
   try {
+    console.log('Analyzing image with answers:', answers);
     const base64ImageDataUrl = await convertToBase64(uri);
 
     const payload = {
@@ -76,14 +72,28 @@ export async function analyzeImage(
       messages: [
         {
           role: 'system',
-          content: `You are a professional visual designer and art director. 
-          You analyze images with a focus on composition, color palette, layout, typography, design trends, and emotional tone. 
-          Use precise, creative language and describe the image in detail, as if explaining to a client or design team.`,
+          content: `
+    You are a precise product recognition AI. You specialize in identifying consumer electronics from photos, especially headphones. 
+    When analyzing a product image, you:
+    - Determine the **item type**
+    - Identify the most likely **brand** and **model**
+    - Accurately describe the **colors**
+    - Note any **distinctive design features** that support your conclusion
+    Only include verified information, and clearly state if any detail is uncertain. Do not hallucinate. If the image is ambiguous, offer the closest possible match based on known design features (e.g., earcup shape, hinge type, button layout, padding).
+    `,
         },
         {
           role: 'user',
           content: [
-            { type: 'text', text: 'Please analyze this image and describe it like a professional designer would.' },
+            {
+              type: 'text',
+              text: `Please analyze the product in this image and extract the following:
+    - Item type
+    - Brand
+    - Model
+    - Color(s)
+    - Notable design features`,
+            },
             {
               type: 'image_url',
               image_url: {
@@ -93,8 +103,8 @@ export async function analyzeImage(
           ],
         },
       ],
-      temperature: 0.7, // Balanced creativity
-      max_tokens: 1200, // Allows for rich, detailed output
+      temperature: 0.3,
+      max_tokens: 700,
       top_p: 1,
     };
 
@@ -119,17 +129,17 @@ export async function analyzeImage(
   }
 }
 
-export const TxtToImg = (reference, setImage, answers) => {
+export const TxtToImg = (reference, setImage, answers, params = { model: 'openai', nologo: 'true' }) => {
   async function fetchImage() {
     // Extract details from the reference text
 
-    const prompt = `Create a professional image for a ${reference}.With these details. Background: ${
-      answers.background || 'natural'
-    }. Target audience: ${answers.audience || 'general'}. Tone: ${answers.tone || 'professional'}. 
-    Lighting: ${answers.lighting || 'standard'}. 
-    Format: ${answers.format || 'standard'}.`;
+    const prompt = `Create an image for ${reference}. With these details. Background: ${answers.background}. Target audience: ${answers.audience}. Tone: ${answers.tone}. 
+    Lighting: ${answers.lighting}. 
+    Format: ${answers.format}.`;
 
-    const queryParams = new URLSearchParams();
+    console.log('Generated prompt:', prompt);
+
+    const queryParams = new URLSearchParams({ ...params });
     const encodedPrompt = encodeURIComponent(prompt);
     const url = `https://image.pollinations.ai/prompt/${encodedPrompt}?${queryParams.toString()}`;
 

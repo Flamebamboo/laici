@@ -7,10 +7,10 @@ import UploadImage from '../../components/UploadImage';
 import surveyQuestions from '../../utils/surveyData.json';
 
 import { Feather } from '@expo/vector-icons';
-import { useImage } from '../../Context/ImageProvider';
-import GlowCircle from '../../components/GlowComponent';
+import { WithSkiaWeb } from '@shopify/react-native-skia/lib/module/web';
 import ImageModal from '../../components/ImageModal';
 import NextButton from '../../components/NextButton';
+import { useImage } from '../../Context/ImageProvider';
 import { analyzeImage } from '../../utils/pollinationClient';
 
 import { downloadImage } from '../../components/downloadImage';
@@ -67,7 +67,10 @@ const Home = () => {
         }
       });
 
-      await analyzeImage(image, setImage, answers);
+      console.log('Formatted Answers:', formattedAnswers);
+      console.log('answeser', answers);
+
+      await analyzeImage(image, setImage, formattedAnswers);
     } catch (error) {
       console.error('Errorrr:', error);
     } finally {
@@ -102,7 +105,10 @@ const Home = () => {
         end={{ x: 1, y: 1 }}
         style={[styles.background, { height: height }]}
       />
-      <GlowCircle />
+      <WithSkiaWeb
+        getComponent={() => import('../../components/GlowComponent')}
+        fallback={<Text>Loading Skia...</Text>}
+      />
 
       <View style={styles.mainWrapper}>
         <View style={styles.headerContainer}>

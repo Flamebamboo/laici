@@ -1,6 +1,6 @@
 {
   "name": "laici",
-  "main": "index.js",
+  "main": "index.web.js",
   "version": "1.0.0",
   "scripts": {
     "start": "expo start",

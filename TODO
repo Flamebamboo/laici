@@ -18,6 +18,7 @@ Todo:
   ✔ Improve image results display with better styling, add a modal to show the image in full screen @done(25-05-18 12:03)
   ✔ Create download image function @critical @1h @started(25-05-18 15:29) @done(25-05-18 18:46) @lasted(3h17m41s) breaks in between
   ✔ hotkeys for selecting questions using numbered keys 1-4 and enter to submit answer @done(25-05-18 14:38)
+  ✔ Deploy using cloudflare, "npx expo export -p web"  *fix deployment issues with Skia web compatibility took the whole day + procastination lmao @done(25-05-19 22:48)
   ☐ Extract product details with pollination AI vison analysis inputs
   ☐ Preprocess the uploaded image to go through background removal
   ☐ Use openAI image gen 1 model to generate images with the quiz data, we can use vision analysis logic from pollination AI for reference image in the future
@@ -26,11 +27,11 @@ Todo:
   
 
 
-  Hours Log This Month 20hours: 
+  Hours Log This Month 25hours: 
     17th May 2025 10:12PM current time. 80 Hours left to complete 100 hours total
     80 hours ÷ 14 days = ~5 hours and 45 minutes per day
-    ☐ 18th Sunday @6hours (10:30 - 12:30  ✔) (2:30 - 4:30 ✔) (9:00 - 11:00 ☐) 
-    ☐ 19th Monday @6hours
+    ☐ 18th Sunday @6hours (10:30 - 12:30  ✔) (2:30 - 4:30 ✔) (6:30- 7 ✔) (9:30 - 11:00 ☐) 
+    ☐ 19th Monday @6hours (7:00AM - 7:30AM ✔) (10:30PM - 12:30AM ☐) 
     ☐ 20th Tuesday @6hours
     ☐ 21st Wednesday @6hours
     ☐ 22nd Thursday @6hours
@@ -43,3 +44,4 @@ Todo:
     ☐ 29th Thursday @6hours
     ☐ 30th Friday @6hours
     ☐ 31st Saturday @6hours
+    
