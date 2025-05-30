@@ -1,5 +1,4 @@
 import { convertToBase64 } from './imageUtils';
-import { generateProductImageWithEdit } from './openAIClient';
 
 /*
 Comparison between convertToBase64 and fileToBase64:
@@ -100,8 +99,9 @@ export async function analyzeImage(uri, setImage, answers) {
 
     console.log('API RESPONSE:', JSON.stringify(result, null, 2));
 
-    // Use OpenAI image-to-image edit for more accurate product preservation
-    await generateProductImageWithEdit({ imageUri: uri, answers, setImage });
+    // // Use OpenAI image-to-image edit for more accurate product preservation
+    // await generateProductImageWithEdit({ imageUri: uri, answers, setImage });
+    TxtToImg(result.choices[0].message.content, setImage, answers);
   } catch (error) {
     console.error('Error analyzing image:', error);
   }

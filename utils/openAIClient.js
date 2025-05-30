@@ -5,6 +5,8 @@ const client = new OpenAI({
   apiKey: process.env.EXPO_PUBLIC_OPENAI_API_KEY,
 });
 
+// function generateImage
+
 export async function generateProductImageWithEdit({ imageUri, answers, setImage }) {
   const promptParts = [];
   if (answers.background) promptParts.push(`Background: ${answers.background}`);
@@ -16,7 +18,9 @@ export async function generateProductImageWithEdit({ imageUri, answers, setImage
   const prompt = promptParts.join('. ');
 
   try {
-    const url = await generateImage({ imageUri, prompt });
+    // const url = await generateImage({ imageUri, prompt });
+
+    console.log(prompt);
     if (setImage) setImage(url);
     return url;
   } catch (error) {
